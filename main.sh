@@ -1,5 +1,6 @@
 #!/bin/bash
-# curl https://toolshed.g2.bx.psu.edu/api/repositories > repos.json
+set -x
+curl https://toolshed.g2.bx.psu.edu/api/repositories > repos.json
 cat repos.json| jq '[.[] | {"key": (.owner +"/" + .name), "value": (.times_downloaded) }] | from_entries' -S > downloads.json
 cat repos.json| jq '.[] | [.owner +"/" + .name, .times_downloaded] | @tsv' -r > downloads.tsv
 
